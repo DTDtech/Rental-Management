@@ -14,8 +14,10 @@ export default function Home() {
               <Image
                 src={Logo}
                 alt="92s logo"
-                width={200}
-                height={200}
+                width={0}
+                height={0}
+                style={{ width: '200px', height: "auto" }}
+                priority
               />
             </div>
 
@@ -48,10 +50,15 @@ export default function Home() {
             </div>
 
             <div className="mx-auto mt-2">
-              <button type='button' className='rounded-md shadow bg-atomicPink/50 hover:bg-lightPastelPurple focus:outline-none focus:ring-2 focus:ring-lavender px-3 py-2 text-sm text-white'> Sign in </button>
+              <button type='button' className='rounded-md shadow bg-atomicPink/50 hover:bg-lightPastelPurple focus:outline-none focus:ring-2 focus:ring-lavender px-3 py-2 text-sm text-white' 
+              href="/api/auth/login"> Sign in </button>
             </div>
 
-          </div>        
+            <div className='mx-auto '>
+              <p> or sign up with </p>
+            </div>
+
+          </div>
         </div>
       </form>
     </div>
