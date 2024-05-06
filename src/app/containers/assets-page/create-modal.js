@@ -1,8 +1,8 @@
 'use client'
 
-import EditReceivableForm from "../edit-form";
+import CreateAssetForm from "./create-form";
 
-const EditModal = ({ data, onClose }) => {
+const CreateModal = ({ onClose }) => {
 
     return (
         <>
@@ -10,10 +10,10 @@ const EditModal = ({ data, onClose }) => {
                 <div className="w-3/4">
                     <div className="rounded-lg shadow-lg w-full bg-white">
                         <div className="flex justify-between items-start border-b-2 border-solid border-paleMagenta p-5 font-semibold">
-                            <h3 className="text-2xl font-sans">Edit receivable</h3>
+                            <h3 className="text-2xl font-sans">Create asset</h3>
                             <button className="bg-transparent text-2xl" onClick={onClose}> x </button>
                         </div>
-                        <EditReceivableForm placeholderData={data} onCloseButton={onClose}/>
+                        <CreateAssetForm onCloseButton={onClose}/>
                     </div>
                 </div>
             </div>
@@ -23,4 +23,4 @@ const EditModal = ({ data, onClose }) => {
     )
 }
 
-export default EditModal;
+export default CreateModal;

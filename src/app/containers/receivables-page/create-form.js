@@ -2,12 +2,9 @@
 
 import CreateReceivable from "@/app/actions/Receivables/createReceivable"
 import { useState } from "react"
-import { useRouter } from "next/navigation"
 
 const CreateReceivableForm = ({ onCloseButton }) => {
     const [validationError, setValidationError] = useState("")
-
-    const router = useRouter();
 
     return (
         <form action={CreateReceivable} onSubmit={onCloseButton}>

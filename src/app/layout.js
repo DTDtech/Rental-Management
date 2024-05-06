@@ -13,7 +13,16 @@ export default function RootLayout({ children }) {
             <Script src="https://kit.fontawesome.com/f29473877d.js" crossorigin="anonymous" />
           </head>
           <body>
-            <main>{children}</main>
+            <main>
+              <div className="flex h-screen">
+                <div className="float-left w-64 border-2 flex-col">
+                  <p>Nav holder</p>
+                </div>
+                <div className="float-left w-full flex justify-center p-6">
+                  {children}
+                </div>
+              </div>
+            </main>
           </body>
         </html>
       </SessionProvider>

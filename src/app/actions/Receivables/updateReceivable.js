@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import connectionPool from '@/app/config/db.config'
 import { EqualityCheck } from '../utils'
-import { FormSchema, DateSchema, NumericSchema } from './validationdData'
+import { ReceivablesFormSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
 
 const UpdateReceivable = async (placeholderData, formData) => {
 
@@ -22,7 +22,7 @@ const UpdateReceivable = async (placeholderData, formData) => {
     /*check if form data is the same as placeholder data, 
     if not then update*/
     if (!EqualityCheck(rawFormData, placeholderData)) {
-        const { id, name, contract_id, status, note } = FormSchema.parse({
+        const { id, name, contract_id, status, note } = ReceivablesFormSchema.parse({
             id: rawFormData.id,
             name: rawFormData.name,
             contract_id: rawFormData.contract_id,

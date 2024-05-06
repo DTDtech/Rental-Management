@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const FormSchema = z.object({
+export const ReceivablesFormSchema = z.object({
     id: z.number(),
     name: z.string(),
     contract_id: z.string(),
@@ -8,7 +8,15 @@ export const FormSchema = z.object({
     note: z.string(),
 });
 
-export const CreateReceivableSchema = FormSchema.omit({ id: true });
+export const AssetsFormSchema = z.object({
+    id: z.number(),
+    type: z.enum(['Camera', 'Lighting', '']),
+    name: z.string(),
+    description: z.string(),
+});
+
+export const CreateReceivableSchema = ReceivablesFormSchema.omit({ id: true });
+export const CreateAssetSchema = AssetsFormSchema.omit({ id: true });
 
 export const ZodEmptyStringOrNumber = z
     .string()

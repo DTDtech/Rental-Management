@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache'
 import connectionPool from '@/app/config/db.config'
-import { CreateReceivableSchema, ZodEmptyStringOrDate, ZodEmptyStringOrNumber } from './validationdData'
+import { CreateReceivableSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
 
 const CreateReceivable = async (formData) => {
 
@@ -24,11 +24,36 @@ const CreateReceivable = async (formData) => {
         note: rawFormData.note,
     });
 
-    const date = ZodEmptyStringOrDate.parse(rawFormData.date);
-    const phone_number = ZodEmptyStringOrNumber.parse(rawFormData.phone_number);
-    const debt = ZodEmptyStringOrNumber.parse(rawFormData.debt);
-    const paid = ZodEmptyStringOrNumber.parse(rawFormData.paid);
-    
+    let date, phone_number, debt, paid;
+
+    if (rawFormData.date != '') {
+        date = DateSchema.parse(rawFormData.date);
+    }
+    else {
+        date = null;
+    }
+
+    if (rawFormData.phone_number != '') {
+        phone_number = NumericSchema.parse(rawFormData.phone_number);
+    }
+    else {
+        phone_number = null;
+    }
+
+    if (rawFormData.debt != '') {
+        debt = NumericSchema.parse(rawFormData.debt);
+    }
+    else {
+        debt = null;
+    }
+
+    if (rawFormData.paid != '') {
+        paid = NumericSchema.parse(rawFormData.paid);
+    }
+    else {
+        paid = null;
+    }
+
     const text = `INSERT INTO receivables(name, date, contract_id, phone_number, debt, paid, status, note)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
     const values = [name, date, contract_id, phone_number, debt, paid, status, note];

@@ -1,4 +1,4 @@
-import { checkEmail, saveUser } from "@/actions/auth";
+import { checkEmail, saveUser } from "@/app/actions/auth";
 
 export async function POST(request) {
     const requestData = await request.json();

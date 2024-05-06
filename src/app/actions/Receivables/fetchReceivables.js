@@ -3,7 +3,7 @@
 import connectionPool from '@/app/config/db.config'
 import { unstable_noStore as noStore } from 'next/cache'
 
-export async function FetchReceivables() {
+const FetchReceivables = async () => {
     noStore();
     try {
         const text = 'SELECT * FROM receivables ORDER BY id ASC';
@@ -16,3 +16,4 @@ export async function FetchReceivables() {
     }
 }
 
+export default FetchReceivables;
