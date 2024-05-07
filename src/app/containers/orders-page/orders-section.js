@@ -1,13 +1,13 @@
 'use client'
 
-import DeleteReceivable from "@/app/actions/Receivables/deleteReceivable"
-import EditModal from "@/app/containers/receivables-page/edit-modal"
-import CreateModal from "@/app/containers/receivables-page/create-modal"
-import CreateReceivableButton from "@/app/containers/receivables-page/create-button"
-import FilterReceivablesDropdown from "@/app/containers/receivables-page/filter-dropdown"
+import DeleteOrder from "@/app/actions/Orders/deleteOrder"
+import EditModal from "@/app/containers/orders-page/edit-modal"
+import CreateModal from "@/app/containers/orders-page/create-modal"
+import CreateOrderButton from "@/app/containers/orders-page/create-button"
+import FilterOrdersDropdown from "@/app/containers/orders-page/filter-dropdown"
 import { useState } from "react"
 
-const ReceivablesSection = ({ receivables }) => {
+const OrdersSection = ({ orders }) => {
 
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [editModalData, setEditModalData] = useState(null);
@@ -20,38 +20,38 @@ const ReceivablesSection = ({ receivables }) => {
         currency: "VND",
     });
 
-    const FilterReceivables = () => {
-        if (filter === "byClosestDate") {
-            const filteredReceivableArray = receivables.slice(0).sort(function (a, b) {
-                return new Date(b.date) - new Date(a.date);
+    const FilterOrders = () => {
+        if (filter === "byFurthestDate") {
+            const filteredOrderArray = orders.slice(0).sort(function (a, b) {
+                return Math.abs(new Date(b.return_date)) - Math.abs(new Date(a.return_date));
             })
-            return filteredReceivableArray;
+            return filteredOrderArray;
         }
-        else if (filter === "byOldestDate") {
-            const filteredReceivableArray = receivables.slice(0).sort(function (a, b) {
-                return new Date(a.date) - new Date(b.date);
+        else if (filter === "byClosestDate") {
+            const filteredOrderArray = orders.slice(0).sort(function (a, b) {
+                return Math.abs(new Date(a.return_date)) - Math.abs(new Date(b.return_date));
             })
-            return filteredReceivableArray;
+            return filteredOrderArray;
         }
         else {
-            const filteredReceivableArray = receivables;
-            return filteredReceivableArray;
+            const filteredOrderArray = orders;
+            return filteredOrderArray;
         }
     }
 
-    const filteredReceivables = FilterReceivables();
+    const filteredOrders = FilterOrders();
 
     return (
         <>
             <div className="flex justify-between items-center">
                 <div>
-                    <CreateReceivableButton onClose={() => {
+                    <CreateOrderButton onClose={() => {
                         setShowCreateModal(true);
                     }
                     } />
                 </div>
                 <div>
-                    <FilterReceivablesDropdown onSelectFilter={setFilter} />
+                    <FilterOrdersDropdown onSelectFilter={setFilter} />
                 </div>
             </div>
             <div className="flex justify-center">
@@ -60,9 +60,8 @@ const ReceivablesSection = ({ receivables }) => {
                         <thead className="bg-lavenderFloral text-white uppercase">
                             <tr className="">
                                 <th scope="col" className="px-2 py-4">Name</th>
-                                <th scope="col" className="px-2 py-4">Date</th>
-                                <th scope="col" className="px-2 py-4 w-48">Contract ID</th>
-                                <th scope="col" className="px-2 py-4 w-48">Phone Number</th>
+                                <th scope="col" className="px-2 py-4">Pick-up date</th>
+                                <th scope="col" className="px-2 py-4 w-48">Return date</th>
                                 <th scope="col" className="px-2 py-4">Debt</th>
                                 <th scope="col" className="px-2 py-4">Paid</th>
                                 <th scope="col" className="px-2 py-4 w-48">Note</th>
@@ -71,25 +70,24 @@ const ReceivablesSection = ({ receivables }) => {
                             </tr>
                         </thead>
                         <tbody className="bg-slateBlue text-white">
-                            {filteredReceivables.map((filteredReceivable) => (
-                                <tr key={filteredReceivable.id}>
-                                    <td className="px-2 py-4">{filteredReceivable.name}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.date?.toLocaleDateString("es-US")}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.contract_id}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.phone_number}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.debt ? currencyFormatter.format(filteredReceivable.debt) : null}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.paid ? currencyFormatter.format(filteredReceivable.paid) : null}</td>
-                                    <td className="px-2 py-4 truncate">{filteredReceivable.note}</td>
-                                    <td className="px-2 py-4">{filteredReceivable.status}</td>
+                            {filteredOrders.map((filteredOrder) => (
+                                <tr key={filteredOrder.id}>
+                                    <td className="px-2 py-4">{filteredOrder.name}</td>
+                                    <td className="px-2 py-4">{filteredOrder.pick_up_date?.toLocaleDateString("es-US")}</td>
+                                    <td className="px-2 py-4">{filteredOrder.return_date?.toLocaleDateString("es-US")}</td>
+                                    <td className="px-2 py-4">{filteredOrder.debt ? currencyFormatter.format(filteredOrder.debt) : null}</td>
+                                    <td className="px-2 py-4">{filteredOrder.paid ? currencyFormatter.format(filteredOrder.paid) : null}</td>
+                                    <td className="px-2 py-4 truncate">{filteredOrder.note}</td>
+                                    <td className="px-2 py-4">{filteredOrder.status}</td>
                                     <td className="px-2 py-4">
                                         <button onClick={() => {
-                                            setEditModalData(filteredReceivable);
+                                            setEditModalData(filteredOrder);
                                             setShowEditModal(true);
                                         }
                                         }>
                                             <i className="fa-regular fa-pen-to-square mr-3"></i>
                                         </button>
-                                        <button onClick={() => DeleteReceivable(filteredReceivable.id)}>
+                                        <button onClick={() => DeleteOrder(filteredOrder.id)}>
                                             <i className="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
@@ -122,5 +120,5 @@ const ReceivablesSection = ({ receivables }) => {
     )
 }
 
-export default ReceivablesSection;
+export default OrdersSection;
 

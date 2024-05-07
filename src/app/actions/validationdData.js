@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const ReceivablesFormSchema = z.object({
+export const OrdersFormSchema = z.object({
     id: z.number(),
     name: z.string(),
     contract_id: z.string(),
@@ -15,7 +15,7 @@ export const AssetsFormSchema = z.object({
     description: z.string(),
 });
 
-export const CreateReceivableSchema = ReceivablesFormSchema.omit({ id: true });
+export const CreateOrderSchema = OrdersFormSchema.omit({ id: true });
 export const CreateAssetSchema = AssetsFormSchema.omit({ id: true });
 
 export const ZodEmptyStringOrNumber = z

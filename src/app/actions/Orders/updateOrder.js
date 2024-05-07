@@ -3,14 +3,15 @@
 import { revalidatePath } from 'next/cache'
 import connectionPool from '@/app/config/db.config'
 import { EqualityCheck } from '../utils'
-import { ReceivablesFormSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
+import { OrdersFormSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
 
-const UpdateReceivable = async (placeholderData, formData) => {
+const UpdateOrder = async (placeholderData, formData) => {
 
     const rawFormData = {
         id: placeholderData.id,
         name: formData.get('name'),
-        date: formData.get('date'),
+        pick_up_date: formData.get('pick_up_date'),
+        return_date: formData.get('return_date'),
         contract_id: formData.get('contract_id'),
         phone_number: formData.get('phone_number'),
         debt: formData.get('debt'),
@@ -22,7 +23,7 @@ const UpdateReceivable = async (placeholderData, formData) => {
     /*check if form data is the same as placeholder data, 
     if not then update*/
     if (!EqualityCheck(rawFormData, placeholderData)) {
-        const { id, name, contract_id, status, note } = ReceivablesFormSchema.parse({
+        const { id, name, contract_id, status, note } = OrdersFormSchema.parse({
             id: rawFormData.id,
             name: rawFormData.name,
             contract_id: rawFormData.contract_id,
@@ -30,13 +31,20 @@ const UpdateReceivable = async (placeholderData, formData) => {
             note: rawFormData.note,
         });
 
-        let date, phone_number, debt, paid;
+        let pick_up_date, return_date, phone_number, debt, paid;
 
-        if (rawFormData.date != '') {
-            date = DateSchema.parse(rawFormData.date);
+        if (rawFormData.pick_up_date != '') {
+            pick_up_date = DateSchema.parse(rawFormData.pick_up_date);
         }
         else {
-            date = null;
+            pick_up_date = null;
+        }
+
+        if (rawFormData.return_date != '') {
+            return_date = DateSchema.parse(rawFormData.return_date);
+        }
+        else {
+            return_date = null;
         }
 
         if (rawFormData.phone_number != '') {
@@ -60,18 +68,18 @@ const UpdateReceivable = async (placeholderData, formData) => {
             paid = null;
         }
 
-        const text = `UPDATE receivables SET name=$1, date=$2, contract_id=$3, phone_number=$4, 
-        debt=$5, paid=$6, status=$7, note=$8 WHERE id=$9`;
-        const values = [name, date, contract_id, phone_number, debt, paid, status, note, id];
+        const text = `UPDATE orders SET name=$1, pick_up_date=$2, return_date=$3, contract_id=$4, phone_number=$5, 
+        debt=$6, paid=$7, status=$8, note=$9 WHERE id=$10`;
+        const values = [name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note, id];
         try {
             await connectionPool.query(text, values);
         }
         catch (error) {
             console.log(error);
-            throw new Error("Unable to update receivable.");
+            throw new Error("Unable to update order.");
         }
     }
-    revalidatePath('/protected/receivables');
+    revalidatePath('/protected/orders');
 }
 
-export default UpdateReceivable;
+export default UpdateOrder;

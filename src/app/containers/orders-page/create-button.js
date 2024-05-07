@@ -1,6 +1,6 @@
 'use client'
 
-const CreateReceivableButton = ({ onClose }) => {
+const CreateOrderButton = ({ onClose }) => {
     return (
         <>
             <button className="bg-mayaBlue w-28 pl-4 py-4 rounded-full shadow-lg" onClick={onClose}>
@@ -13,4 +13,4 @@ const CreateReceivableButton = ({ onClose }) => {
     )
 }
 
-export default CreateReceivableButton;
+export default CreateOrderButton;

@@ -57,7 +57,7 @@ const UpdateAsset = async (placeholderData, formData) => {
         }
         catch (error) {
             console.log(error);
-            throw new Error("Unable to update receivable.");
+            throw new Error("Unable to update orders.");
         }
     }
     revalidatePath('/protected/assets');

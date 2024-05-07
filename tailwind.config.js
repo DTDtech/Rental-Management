@@ -21,7 +21,6 @@ module.exports = {
         'lightPastelPurple': '#ab92e1',
         'white': '#ffffff',
         'lavender': '#b57edc',
-        'delftBlue' : '#313866',
         'paleMagenta' : '#fe7be5',
         'lavenderFloral' : '#b987d6',
         'slateBlue' : '#7666bf',

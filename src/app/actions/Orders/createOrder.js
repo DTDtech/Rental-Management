@@ -2,13 +2,14 @@
 
 import { revalidatePath } from 'next/cache'
 import connectionPool from '@/app/config/db.config'
-import { CreateReceivableSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
+import { CreateOrderSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
 
-const CreateReceivable = async (formData) => {
+const CreateOrder = async (formData) => {
 
     const rawFormData = {
         name: formData.get('name'),
-        date: formData.get('date'),
+        pick_up_date: formData.get('pick_up_date'),
+        return_date: formData.get('return_date'),
         contract_id: formData.get('contract_id'),
         phone_number: formData.get('phone_number'),
         debt: formData.get('debt'),
@@ -17,20 +18,27 @@ const CreateReceivable = async (formData) => {
         note: formData.get('note'),
     }
 
-    const { name, contract_id, status, note } = CreateReceivableSchema.parse({
+    const { name, contract_id, status, note } = CreateOrderSchema.parse({
         name: rawFormData.name,
         contract_id: rawFormData.contract_id,
         status: rawFormData.status,
         note: rawFormData.note,
     });
 
-    let date, phone_number, debt, paid;
+    let pick_up_date, return_date, phone_number, debt, paid;
 
-    if (rawFormData.date != '') {
-        date = DateSchema.parse(rawFormData.date);
+    if (rawFormData.pick_up_date != '') {
+        pick_up_date = DateSchema.parse(rawFormData.pick_up_date);
     }
     else {
-        date = null;
+        pick_up_date = null;
+    }
+
+    if (rawFormData.return_date != '') {
+        return_date = DateSchema.parse(rawFormData.return_date);
+    }
+    else {
+        return_date = null;
     }
 
     if (rawFormData.phone_number != '') {
@@ -54,17 +62,17 @@ const CreateReceivable = async (formData) => {
         paid = null;
     }
 
-    const text = `INSERT INTO receivables(name, date, contract_id, phone_number, debt, paid, status, note)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`;
-    const values = [name, date, contract_id, phone_number, debt, paid, status, note];
+    const text = `INSERT INTO orders(name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
+    const values = [name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note];
     try {
         await connectionPool.query(text, values);
     }
     catch (error) {
         console.log(error);
-        throw new Error("Unable to create receivable.");
+        throw new Error("Unable to create order.");
     }
-    revalidatePath('/protected/receivables');
+    revalidatePath('/protected/orders');
 }
 
-export default CreateReceivable;
+export default CreateOrder;

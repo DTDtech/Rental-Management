@@ -3,7 +3,7 @@
 import AssetsSection from "@/app/containers/assets-page/assets-section.js"
 import FetchAssets from "@/app/actions/Assets/fetchAssets";
 
-const ReceivablesPage = async () => {
+const AssetsPage = async () => {
     const data = await FetchAssets();
 
     return (
@@ -20,4 +20,4 @@ const ReceivablesPage = async () => {
     )
 }
 
-export default ReceivablesPage;
+export default AssetsPage;
