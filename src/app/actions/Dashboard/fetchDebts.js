@@ -6,7 +6,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 const FetchDebts = async () => {
     noStore();
     try {
-        const text = 'SELECT name, debt, return_date FROM orders ORDER BY id ASC';
+        const text = 'SELECT id, name, debt, return_date FROM orders ORDER BY id ASC';
         const data = await connectionPool.query(text);
         return data.rows;
     }

@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import connectionPool from '@/app/config/db.config'
 import { EqualityCheck } from '../utils'
 import { OrdersFormSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
+import { redirect } from 'next/navigation'
 
 const UpdateOrder = async (placeholderData, formData) => {
 
@@ -80,6 +81,7 @@ const UpdateOrder = async (placeholderData, formData) => {
         }
     }
     revalidatePath('/protected/orders');
+    redirect('/protected/orders');
 }
 
 export default UpdateOrder;

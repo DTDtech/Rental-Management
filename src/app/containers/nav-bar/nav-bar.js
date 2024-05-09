@@ -25,7 +25,7 @@ const NavBar = () => {
             </div>
             {links.map((link) => {
                 return (
-                    <div className="h-12 flex items-stretch w-full rounded-lg my-1 bg-gray-100 hover:bg-sky-100">
+                    <div className="h-12 flex items-stretch w-full rounded-lg my-1 bg-gray-100 hover:bg-sky-100" key={link.name}>
                         <Link
                             key={link.name}
                             className="flex grow justify-center items-center gap-3"
@@ -37,8 +37,11 @@ const NavBar = () => {
                 )
             })}
             <div className="h-auto w-full grow rounded-md bg-gray-100 my-1"></div>
-            <div className="h-12 flex justify-center w-full rounded-lg my-1 bg-gray-100 hover:bg-sky-100">
-                <button className="grow" onClick={signOut}>Sign Out</button>
+            <div className="h-12 flex justify-center items-stretch w-full rounded-lg my-1 bg-gray-100 hover:bg-sky-100">
+                <button className="grow items-center" onClick={signOut}>
+                    <i className="fa-solid fa-power-off mr-3"></i>
+                    Sign Out
+                </button>
             </div>
         </>
     )

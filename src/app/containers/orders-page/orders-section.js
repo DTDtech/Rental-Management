@@ -6,6 +6,7 @@ import CreateModal from "@/app/containers/orders-page/create-modal"
 import CreateOrderButton from "@/app/containers/orders-page/create-button"
 import FilterOrdersDropdown from "@/app/containers/orders-page/filter-dropdown"
 import { useState } from "react"
+import Link from "next/link"
 
 const OrdersSection = ({ orders }) => {
 
@@ -59,7 +60,7 @@ const OrdersSection = ({ orders }) => {
                     <table className="table-fixed text-black bg-white text-center w-full">
                         <thead className="bg-lavenderFloral text-white uppercase">
                             <tr className="">
-                                <th scope="col" className="px-2 py-4">Name</th>
+                                <th scope="col" className="px-2 py-4 w-48">Name</th>
                                 <th scope="col" className="px-2 py-4">Pick-up date</th>
                                 <th scope="col" className="px-2 py-4 w-48">Return date</th>
                                 <th scope="col" className="px-2 py-4">Debt</th>
@@ -67,6 +68,7 @@ const OrdersSection = ({ orders }) => {
                                 <th scope="col" className="px-2 py-4 w-48">Note</th>
                                 <th scope="col" className="px-2 py-4 w-48">Status</th>
                                 <th scope="col" className="px-2 py-4">Edit/Delete</th>
+                                <th scope="col" className="px-2 py-4 w-20">More</th>
                             </tr>
                         </thead>
                         <tbody className="bg-slateBlue text-white">
@@ -90,6 +92,13 @@ const OrdersSection = ({ orders }) => {
                                         <button onClick={() => DeleteOrder(filteredOrder.id)}>
                                             <i className="fa-regular fa-trash-can"></i>
                                         </button>
+                                    </td>
+                                    <td className="px-2 py-4 flex">
+                                        <Link href={`/protected/full_order/${filteredOrder.id}`} className="grow">
+                                            <button>
+                                                <i className="fa-solid fa-angle-right"></i>
+                                            </button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}

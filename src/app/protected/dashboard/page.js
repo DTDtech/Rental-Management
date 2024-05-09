@@ -11,12 +11,18 @@ const getProjects = async () => {
 
     return (
         <>
-            <div className="flex w-full h-screen justify-center">
-                <div>
-                    <DebtSection debts={data} />
+            <div className="flex flex-col w-full h-screen overflow-y-auto gap-20">
+                <div className="flex flex-row justify-center w-full gap-5">
+                    <div className="flex justify-center h-screen w-5/12 shrink-0 p-3 border rounded-md shadow-md">
+                        <DebtSection debtList={data} />
+                    </div>
+                    <div className="flex justify-center h-screen w-6/12 shrink-0 p-3 border rounded-md shadow-md">
+                    </div>
                 </div>
-                <div className="h-3/4 w-3/4">
-                    <MonthCalendar />
+                <div className="flex justify-center h-screen w-full shrink-0">
+                    <div className="w-5/6">
+                        <MonthCalendar />
+                    </div>
                 </div>
             </div>
         </>

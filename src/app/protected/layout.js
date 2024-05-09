@@ -13,7 +13,7 @@ export default async function PrivateLayout({ children }) {
     return (
         <>
             <div className="flex h-screen">
-                <div className="float-left w-64 flex flex-col bg-white">
+                <div className="float-left flex flex-col w-64 bg-white sticky top-0">
                     <NavBar />
                 </div>
                 <div className="float-left w-full flex justify-center p-6">
