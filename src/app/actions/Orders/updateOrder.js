@@ -1,18 +1,19 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import connectionPool from '@/app/config/db.config'
 import { EqualityCheck } from '../utils'
-import { OrdersFormSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
+import { OrdersFormSchema, DateSchema, NumericSchema, PhoneNumberSchema } from '@/app/actions/validationdData'
+import { ObjectId } from 'mongodb'
+import client_DB from '@/app/config/db.config'
 import { redirect } from 'next/navigation'
 
 const UpdateOrder = async (placeholderData, formData) => {
 
     const rawFormData = {
-        id: placeholderData.id,
+        _id: placeholderData._id,
         name: formData.get('name'),
-        pick_up_date: formData.get('pick_up_date'),
-        return_date: formData.get('return_date'),
+        pick_up_date: new Date(formData.get('pick_up_date')),
+        return_date: new Date(formData.get('return_date')),
         contract_id: formData.get('contract_id'),
         phone_number: formData.get('phone_number'),
         debt: formData.get('debt'),
@@ -24,8 +25,7 @@ const UpdateOrder = async (placeholderData, formData) => {
     /*check if form data is the same as placeholder data, 
     if not then update*/
     if (!EqualityCheck(rawFormData, placeholderData)) {
-        const { id, name, contract_id, status, note } = OrdersFormSchema.parse({
-            id: rawFormData.id,
+        const { name, contract_id, status, note } = OrdersFormSchema.parse({
             name: rawFormData.name,
             contract_id: rawFormData.contract_id,
             status: rawFormData.status,
@@ -49,7 +49,7 @@ const UpdateOrder = async (placeholderData, formData) => {
         }
 
         if (rawFormData.phone_number != '') {
-            phone_number = NumericSchema.parse(rawFormData.phone_number);
+            phone_number = PhoneNumberSchema.parse(rawFormData.phone_number);
         }
         else {
             phone_number = null;
@@ -69,11 +69,22 @@ const UpdateOrder = async (placeholderData, formData) => {
             paid = null;
         }
 
-        const text = `UPDATE orders SET name=$1, pick_up_date=$2, return_date=$3, contract_id=$4, phone_number=$5, 
-        debt=$6, paid=$7, status=$8, note=$9 WHERE id=$10`;
-        const values = [name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note, id];
+        const filter = { _id: new ObjectId(placeholderData._id) }
+        const orderChange = {
+            $set: {
+                "name": name,
+                "pick_up_date": pick_up_date,
+                "return_date": return_date,
+                "contract_id": contract_id,
+                "phone_number": phone_number,
+                "debt": debt,
+                "paid": paid,
+                "status": status,
+                "note": note
+            }
+        }
         try {
-            await connectionPool.query(text, values);
+            await client_DB.collection('orders').updateOne(filter, orderChange);
         }
         catch (error) {
             console.log(error);

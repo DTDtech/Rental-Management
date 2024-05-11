@@ -1,13 +1,20 @@
-require('dotenv').config();
-const {Pool} = require('pg');
+import { MongoClient, ServerApiVersion } from "mongodb";
+const { UUID } = require('bson');
 
-const connectionPool = new Pool({
-    max: 10, 
-    user: process.env.USER,
-    password: process.env.PGPASSWORD,
-    host: process.env.PGHOST,
-    database: process.env.PGDATABASE,
-    port: process.env.PGPORT
-});
+const uri = process.env.MONGODB_URI
 
-export default connectionPool;
+if (!process.env.MONGODB_URI) {
+    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
+}
+
+const client = new MongoClient(
+    uri,
+    {
+        serverApi: ServerApiVersion.v1,
+        // pkFactory: {
+        //     createPk: () => new UUID().toBinary()
+        // }
+    });
+const client_DB = client.db(process.env.DB);
+
+export default client_DB;

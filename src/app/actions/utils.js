@@ -7,7 +7,9 @@ export const EqualityCheck = (object1, object2) => {
     }
 
     for (let key of keys1) {
-        if (object1[key] !== object2[key]) {
+        if (object1[key].toString() !== object2[key].toString()) {
+            console.log(object1[key].toString());
+            console.log(object2[key].toString());
             return false;
         }
     }

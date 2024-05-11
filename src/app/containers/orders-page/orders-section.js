@@ -73,7 +73,7 @@ const OrdersSection = ({ orders }) => {
                         </thead>
                         <tbody className="bg-slateBlue text-white">
                             {filteredOrders.map((filteredOrder) => (
-                                <tr key={filteredOrder.id}>
+                                <tr key={filteredOrder._id}>
                                     <td className="px-2 py-4">{filteredOrder.name}</td>
                                     <td className="px-2 py-4">{filteredOrder.pick_up_date?.toLocaleDateString("es-US")}</td>
                                     <td className="px-2 py-4">{filteredOrder.return_date?.toLocaleDateString("es-US")}</td>
@@ -89,12 +89,12 @@ const OrdersSection = ({ orders }) => {
                                         }>
                                             <i className="fa-regular fa-pen-to-square mr-3"></i>
                                         </button>
-                                        <button onClick={() => DeleteOrder(filteredOrder.id)}>
+                                        <button onClick={() => DeleteOrder(filteredOrder._id)}>
                                             <i className="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
                                     <td className="px-2 py-4 flex">
-                                        <Link href={`/protected/full_order/${filteredOrder.id}`} className="grow">
+                                        <Link href={`/protected/full_order/${filteredOrder._id}`} className="grow">
                                             <button>
                                                 <i className="fa-solid fa-angle-right"></i>
                                             </button>

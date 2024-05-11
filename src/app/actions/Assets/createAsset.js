@@ -1,8 +1,8 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import connectionPool from '@/app/config/db.config'
 import { CreateAssetSchema, NumericSchema } from '@/app/actions/validationdData'
+import client_DB from '@/app/config/db.config'
 
 const CreateAsset = async (formData) => {
 
@@ -44,11 +44,16 @@ const CreateAsset = async (formData) => {
         price_per_day = null;
     }
 
-    const text = `INSERT INTO assets(name, type, in_stock, description, price_per_hour, price_per_day)
-    VALUES ($1, $2, $3, $4, $5, $6)`;
-    const values = [name, type, in_stock, description, price_per_hour, price_per_day];
+    const asset = {
+        "name": name,
+        "type": type,
+        "in_stock": in_stock,
+        "description": description,
+        "price_per_hour": price_per_hour,
+        "price_per_day": price_per_day 
+    };
     try {
-        await connectionPool.query(text, values);
+        await client_DB.collection('assets').insertOne(asset);
     }
     catch (error) {
         console.log(error);

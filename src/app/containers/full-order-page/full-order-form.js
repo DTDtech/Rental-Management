@@ -20,7 +20,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             id="name"
                             defaultValue={placeholderData.name}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -33,7 +33,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             defaultValue={placeholderData.pick_up_date ?
                                 new Date(placeholderData.pick_up_date + "Z").toISOString().split('T')[0] : null}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -46,7 +46,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             defaultValue={placeholderData.return_date ?
                                 new Date(placeholderData.return_date + "Z").toISOString().split('T')[0] : null}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-                        focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+                        focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -58,7 +58,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             id="contract_id"
                             defaultValue={placeholderData.contract_id}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -70,7 +70,8 @@ const FullOrderForm = ({ placeholderData }) => {
                             id="phone_number"
                             defaultValue={placeholderData.phone_number}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
+                        pattern="[0-9]{10}"
                         />
                     </div>
 
@@ -82,7 +83,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             id="debt"
                             defaultValue={placeholderData.debt}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -94,7 +95,7 @@ const FullOrderForm = ({ placeholderData }) => {
                             id="paid"
                             defaultValue={placeholderData.paid}
                             className="flex-1 rounded-md shadow-md ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full"
+						focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required
                         />
                     </div>
 
@@ -102,7 +103,7 @@ const FullOrderForm = ({ placeholderData }) => {
                         <label htmlFor='status' className='text-sm font-medium leading-8 text-pianoBlack mr-2'> Status: </label>
                         <select name="status" id="status" defaultValue={placeholderData.status}
                             className="flex-1 rounded-md shadow-md bg-white ring-1 ring-nimbusCloud focus:outline-none focus-within:ring-2 focus-within:ring-inset 
-                            focus-within:ring-atomicPink pl-3 text-sm p-2 w-full">
+                            focus-within:ring-atomicPink pl-3 text-sm p-2 w-full" required>
                             <option value=""> Select status </option>
                             <option value="Delivering-Unpaid"> Delivering - Unpaid </option>
                             <option value="Received-Paid"> Received - Paid </option>

@@ -1,7 +1,7 @@
 'use server'
 
+import client_DB from '@/app/config/db.config'
 import { revalidatePath } from 'next/cache'
-import connectionPool from '@/app/config/db.config'
 import { CreateOrderSchema, DateSchema, NumericSchema } from '@/app/actions/validationdData'
 
 const CreateOrder = async (formData) => {
@@ -62,11 +62,19 @@ const CreateOrder = async (formData) => {
         paid = null;
     }
 
-    const text = `INSERT INTO orders(name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`;
-    const values = [name, pick_up_date, return_date, contract_id, phone_number, debt, paid, status, note];
+    const order = {
+        "name": name,
+        "pick_up_date": pick_up_date,
+        "return_date": return_date,
+        "contract_id": contract_id,
+        "phone_number": phone_number,
+        "debt": debt,
+        "paid": paid,
+        "status": status,
+        "note": note 
+    };
     try {
-        await connectionPool.query(text, values);
+        await client_DB.collection('orders').insertOne(order);
     }
     catch (error) {
         console.log(error);

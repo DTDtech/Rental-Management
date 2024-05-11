@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 export const OrdersFormSchema = z.object({
-    id: z.number(),
     name: z.string(),
     contract_id: z.string(),
     status: z.enum(['Delivering-Unpaid', 'Received-Paid', 'Received-Unpaid', '']),
@@ -9,7 +8,6 @@ export const OrdersFormSchema = z.object({
 });
 
 export const AssetsFormSchema = z.object({
-    id: z.number(),
     type: z.enum(['Camera', 'Lighting', '']),
     name: z.string(),
     description: z.string(),
@@ -27,6 +25,10 @@ export const ZodEmptyStringOrNumber = z
     })
     .transform((value) => (value === null ? null : Number(value)));
 
-export const DateSchema = z.coerce.string().date();
+const phoneRegex = new RegExp(/^([0-9]{10})+$/);
 
-export const NumericSchema = z.coerce.number();
+export const PhoneNumberSchema = z.string().regex(phoneRegex, {message: "Invalid phone number"});
+
+export const DateSchema = z.coerce.date({message: "Invalid date"});
+
+export const NumericSchema = z.coerce.number({message: "Invalid number"});

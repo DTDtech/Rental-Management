@@ -1,14 +1,15 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import connectionPool from '@/app/config/db.config'
 import { EqualityCheck } from '../utils'
 import { AssetsFormSchema, NumericSchema } from '@/app/actions/validationdData'
+import { ObjectId } from 'mongodb'
+import client_DB from '@/app/config/db.config'
 
 const UpdateAsset = async (placeholderData, formData) => {
 
     const rawFormData = {
-        id: placeholderData.id,
+        _id: placeholderData._id,
         name: formData.get('name'),
         type: formData.get('type'),
         in_stock: formData.get('in_stock'),
@@ -20,8 +21,7 @@ const UpdateAsset = async (placeholderData, formData) => {
     /*check if form data is the same as placeholder data, 
     if not then update*/
     if (!EqualityCheck(rawFormData, placeholderData)) {
-        const { id, name, type, description } = AssetsFormSchema.parse({
-            id: rawFormData.id,
+        const { name, type, description } = AssetsFormSchema.parse({
             type: rawFormData.type,
             description: rawFormData.description,
             name: rawFormData.name
@@ -35,7 +35,7 @@ const UpdateAsset = async (placeholderData, formData) => {
         else {
             in_stock = null;
         }
-    
+
         if (rawFormData.price_per_hour != '') {
             price_per_hour = NumericSchema.parse(rawFormData.price_per_hour);
         }
@@ -50,10 +50,19 @@ const UpdateAsset = async (placeholderData, formData) => {
             price_per_day = null;
         }
 
-        const text = `UPDATE assets SET name=$1, type=$2, in_stock=$3, description=$4, price_per_hour=$5, price_per_day=$6 WHERE id=$7`;
-        const values = [name, type, in_stock, description, price_per_hour, price_per_day, id];
+        const filter = { _id: new ObjectId(placeholderData._id) }
+        const assetChange = {
+            $set: {
+                "name": name,
+                "type": type,
+                "in_stock": in_stock,
+                "description": description,
+                "price_per_hour": price_per_hour,
+                "price_per_day": price_per_day
+            }
+        }
         try {
-            await connectionPool.query(text, values);
+            await client_DB.collection('assets').updateOne(filter, assetChange);
         }
         catch (error) {
             console.log(error);

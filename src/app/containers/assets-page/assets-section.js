@@ -61,7 +61,7 @@ const AssetsSection = ({ assets }) => {
                         </thead>
                         <tbody className="bg-slateBlue text-white">
                             {filteredAssets.map((filteredAsset) => (
-                                <tr key={filteredAsset.id}>
+                                <tr key={filteredAsset._id}>
                                     <td className="px-2 py-4">{filteredAsset.name}</td>
                                     <td className="px-2 py-4">{filteredAsset.type}</td>
                                     <td className="px-2 py-4">{filteredAsset.in_stock}</td>
@@ -76,7 +76,7 @@ const AssetsSection = ({ assets }) => {
                                         }>
                                             <i className="fa-regular fa-pen-to-square mr-3"></i>
                                         </button>
-                                        <button onClick={() => DeleteAsset(filteredAsset.id)}>
+                                        <button onClick={() => DeleteAsset(filteredAsset._id)}>
                                             <i className="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>

@@ -1,13 +1,16 @@
 'use server'
 
-import connectionPool from "@/app/config/db.config"
+
+import client_DB from "@/app/config/db.config"
+import { ObjectId } from "mongodb"
 import { revalidatePath } from "next/cache"
 
 const DeleteAsset = async (id) => {
-    const text = `DELETE FROM assets WHERE id=$1`;
-    const value = [id];
+    const asset = {
+        _id: new ObjectId(id)
+    }
     try {
-        await connectionPool.query(text, value);
+        await client_DB.collection('assets').deleteOne(asset);
     }
     catch(error) {
         console.log(error);

@@ -34,8 +34,10 @@ const CreateAssetForm = ({ onCloseButton }) => {
                     <div>
                         <label htmlFor='price_per_hour' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> Renting price per hour: </label>
                         <input type="text" name="price_per_hour" id="price_per_hour"
-                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1" required
-                            onChange={UpdatePricePerHour} value={pricePerHour !== '' ? Number(pricePerHour).toLocaleString('en-US') : ''} />
+                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1" 
+                            onChange={UpdatePricePerHour} value={pricePerHour !== '' ? Number(pricePerHour).toLocaleString('en-US') : ''} 
+                            required
+                            />
                     </div>
                 </div>
 
@@ -43,11 +45,13 @@ const CreateAssetForm = ({ onCloseButton }) => {
                     <div>
                         <label htmlFor='price_per_day' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> Renting price per day: </label>
                         <input type="text" name="price_per_day" id="price_per_day"
-                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1" required
-                            onChange={UpdatePricePerDay} value={pricePerDay !== '' ? Number(pricePerDay).toLocaleString('en-US') : ''} />
+                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1"
+                            onChange={UpdatePricePerDay} value={pricePerDay !== '' ? Number(pricePerDay).toLocaleString('en-US') : ''} 
+                            required
+                            />
                     </div>
                     <div>
-                        <label htmlFor='type' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> Type: </label>
+                        <label htmlFor='type' className='text-lg font-medium leading-8 text-pianoBlack mr-2' required> Type: </label>
                         <select name="type" id="type"
                             className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1 bg-white">
                             <option value=""> Select type </option>
