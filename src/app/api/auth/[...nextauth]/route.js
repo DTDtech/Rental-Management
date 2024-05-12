@@ -10,36 +10,33 @@ export const Options = {
     providers: [
         CredentialsProvider({
             async authorize({ email, password }) {
-                const user = await checkEmail(email);
+                const result = await checkEmail(email);
 
-                if (!user) {
+                if (!result) {
                     throw new Error("No account was not found with the given credentials.");
                 }
 
-                const checkPasswordResult = await checkPassword(password, user.hashed_password);
+                const checkPasswordResult = await checkPassword(password, result.hashed_password);
 
                 if (!checkPasswordResult) {
-                    throw new Error("Wrong password.");
+                    return null;
                 }
 
-                return {
-                    name: user.username,
-                    email: user.email, 
-                    id: user.id
-                };
+                const user = { id: result._id, username: result.username, email: result.email }
+                return user;
 
             },
         }),
     ],
     callbacks: {
-        jwt({token, user}) {
+        jwt({ token, user }) {
             if (user?.id) {
                 token.id = user.id;
                 token.name = user.name;
             }
             return token;
         },
-        session({session, token}) {
+        session({ session, token }) {
             if (session.user) {
                 session.user.id = token.id;
             }

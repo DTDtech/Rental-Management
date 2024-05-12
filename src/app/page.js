@@ -1,6 +1,8 @@
 'use server'
 
-import { redirect } from "next/dist/server/api-utils"
+import { redirect } from "next/navigation"
+import { getServerSession } from "next-auth"
+import { Options } from "./api/auth/[...nextauth]/route"
 
 const HomePage = async () => {
     const session = await getServerSession(Options)

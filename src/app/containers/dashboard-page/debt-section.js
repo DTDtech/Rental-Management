@@ -17,8 +17,7 @@ const DebtSection = async ({ debtList }) => {
                 </thead>
                 <tbody className="bg-slateBlue text-white">
                     {debtList.map((debtRecord) => (
-                        
-                        <tr key={debtRecord.id} className="h-12">
+                        <tr key={debtRecord._id} className="h-12">
                             <td className="px-2 py-4">{debtRecord.name}</td>
                             <td className="px-2 py-4">{debtRecord.debt ? new Intl.NumberFormat('en-US').format(debtRecord.debt) : null}</td>
                             <td className="px-2 py-4">{debtRecord.return_date?.toLocaleDateString("es-US")}</td>

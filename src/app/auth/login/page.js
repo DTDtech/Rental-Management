@@ -20,7 +20,7 @@ const LoginPage = () => {
 		const userData = await signIn('credentials', { redirect: false, email: emailRef.current, password: passwordRef.current });
 		if (userData.error === null && userData.ok) {
 			console.log(userData.error);
-			router.replace("/protected/profile");
+			router.replace("/protected/dashboard");
 		}
 		else {
 			setValidationError(userData.error)

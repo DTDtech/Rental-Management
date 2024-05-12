@@ -1,7 +1,6 @@
 'use client'
 import React, { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveUser } from "@/libs/endpoints";
 import Link from "next/link";
 import Image from 'next/image'
 import Logo from '../../../../public/Logo/92sLogo.jpg';
@@ -19,7 +18,7 @@ const SignUpPage = () => {
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(saveUser, {
+            const response = await fetch("/api/saveUser", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,7 +31,7 @@ const SignUpPage = () => {
             });
             const data = await response.json();
             if (data.success === true) {
-                console.log("Signed up successfully");
+                router.push('/auth/login')
             }
             else {
                 setValidationError(data.message);
