@@ -1,6 +1,6 @@
 'use server'
 
-import connectionPool from '@/app/config/db.config'
+import client_DB from '../config/db.config';
 
 const bcrypt = require('bcrypt');
 const saltRounds = 9;
@@ -11,12 +11,13 @@ export const checkPassword = async (password, hashed_password) => {
 }
 
 export const checkEmail = async (email) => {
+    const checkDuplicateEmail = {
+        "email": email
+    }
     try {
-        const text = 'SELECT * FROM users WHERE email=$1';
-        const value = [email];
-        const result = await connectionPool.query(text, value);
-        if (result.rows[0] != undefined) {
-            return result.rows[0];
+        const result = await client_DB.collection('users').findOne(checkDuplicateEmail);
+        if (result != undefined) {
+            return result;
         }
         else {
             return false;
@@ -30,11 +31,14 @@ export const checkEmail = async (email) => {
 
 export const saveUser = async (email, username, password) => {
     const hashed_password = await bcrypt.hash(password, saltRounds);
+    const account = {
+        "email": email,
+        "username": username,
+        "hashed_password": hashed_password 
+    }
     try {
-        const text = 'INSERT INTO users(email, username, hashed_password) VALUES ($1, $2, $3) RETURNING $1';
-        const value = [email, username, hashed_password];
-        const result = await connectionPool.query(text, value);
-        if (result.rows[0] != undefined) {
+        const result = await client_DB.collection('users').insertOne(account);
+        if (result.insertedId != undefined) {
             return true;
         }
     }
