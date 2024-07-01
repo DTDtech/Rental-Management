@@ -8,10 +8,7 @@ import NavBar from '@/app/containers/nav-bar/nav-bar'
 export default async function PrivateLayout({ children }) {
     const session = await getServerSession(Options)
 
-    if (!session?.user) {
-        console.log("user not found");
-        redirect('/auth/login');
-    }
+    if (!session?.user) redirect('/auth/login')
 
     return (
         <>
