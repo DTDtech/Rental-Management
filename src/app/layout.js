@@ -14,10 +14,8 @@ export default function RootLayout({ children }) {
             <Script src="https://kit.fontawesome.com/f29473877d.js" crossorigin="anonymous" />
           </head>
           <body>
-            <main>
-              {children}
-              <SpeedInsights />
-            </main>
+            {children}
+            <SpeedInsights />
           </body>
         </html>
       </SessionProvider>
