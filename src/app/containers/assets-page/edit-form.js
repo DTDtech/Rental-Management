@@ -31,13 +31,14 @@ const EditAssetForm = ({ placeholderData, onCloseButton }) => {
                     <div>
                         <label htmlFor='in_stock' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> In Stock: </label>
                         <input type="number" name="in_stock" id="in_stock" defaultValue={placeholderData.in_stock}
-                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1" />
+                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1" required/>
                     </div>
                     <div>
                         <label htmlFor='price_per_hour' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> Renting price per hour: </label>
                         <input type="text" name="price_per_hour" id="price_per_hour"
                             className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1"
                             onChange={UpdatePricePerHour} value={pricePerHour !== '' ? Number(pricePerHour).toLocaleString('en-US') : ''}
+                            required
                         />
                     </div>
                 </div>
@@ -48,12 +49,13 @@ const EditAssetForm = ({ placeholderData, onCloseButton }) => {
                         <input type="text" name="price_per_day" id="price_per_day"
                             className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1"
                             onChange={UpdatePricePerDay} value={pricePerDay !== '' ? Number(pricePerDay).toLocaleString('en-US') : ''}
+                            required
                         />
                     </div>
                     <div>
                         <label htmlFor='type' className='text-lg font-medium leading-8 text-pianoBlack mr-2'> Type: </label>
                         <select name="type" id="type" defaultValue={placeholderData.type}
-                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1 bg-white">
+                            className="rounded-md outline outline-2 outline-delftBlue px-2 pb-2 pt-1 bg-white" required>
                             <option value=""> Select type </option>
                             <option value="Camera"> Camera </option>
                             <option value="Lighting"> Lighting </option>

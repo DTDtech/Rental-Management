@@ -3,6 +3,7 @@
 import './globals.css'
 import { SessionProvider } from "next-auth/react"
 import Script from 'next/script'
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function RootLayout({ children }) {
   return (
@@ -15,6 +16,7 @@ export default function RootLayout({ children }) {
           <body>
             <main>
               {children}
+              <SpeedInsights />
             </main>
           </body>
         </html>
